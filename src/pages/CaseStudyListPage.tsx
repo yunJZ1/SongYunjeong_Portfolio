@@ -11,7 +11,20 @@ import {
   buildCuratedArchiveEntries,
   type CuratedArchiveEntry,
 } from "../lib/buildCuratedArchiveEntries";
+import {
+  getAIWorkflowCardMeta,
+  getAIWorkflowCardSubtitle,
+} from "../data/aiWorkflowCardMeta";
+import { getCaseStudyCardLabels } from "../data/caseStudyCardLabels";
+import { getProductResearchFieldMeta } from "../data/productResearchFieldMeta";
+import { getProductResearchPublicationLink } from "../data/productResearchPublicationLinks";
+import { getProductCaseThumbnail } from "../data/productCaseThumbnails";
+import { getAIWorkflowThumbnail } from "../data/aiWorkflowThumbnails";
+import { getProductResearchThumbnail } from "../data/productResearchThumbnails";
 import type { CaseStudyListCategory } from "../lib/caseStudyListCategory";
+import TbuBadge from "../components/project/TbuBadge";
+
+const TBU_WORKFLOW_CARD_ID = "build-validate";
 
 type CaseStudyListPageProps = {
   onOpenCase: (id: string) => void;
@@ -77,26 +90,67 @@ export default function CaseStudyListPage({
                   id={entry.id}
                   title={entry.title}
                   description={entry.description}
-                  summary={
-                    getCaseSummary(entry.id) ??
-                    entry.study?.tags.join(" · ") ??
-                    entry.meta
+                  fieldMeta={
+                    activeCategory === "product-research"
+                      ? getProductResearchFieldMeta(entry.id)
+                      : undefined
                   }
-                  meta={entry.meta}
+                  summary={
+                    activeCategory === "product-research"
+                      ? undefined
+                      : getCaseSummary(entry.id) ??
+                        entry.study?.tags.join(" · ") ??
+                        undefined
+                  }
+                  labels={getCaseStudyCardLabels(activeCategory, entry.id)}
+                  previewImageSrc={
+                    activeCategory === "product-cases"
+                      ? getProductCaseThumbnail(entry.id)
+                      : activeCategory === "product-research"
+                        ? getProductResearchThumbnail(entry.id)
+                        : undefined
+                  }
                   previewLabel="Case Study Preview"
-                  ctaLabel="View case study"
-                  onOpen={() => onOpenCase(entry.id)}
+                  ctaLabel={
+                    activeCategory === "product-research"
+                      ? "View publication ↗"
+                      : "View case study"
+                  }
+                  ctaHref={
+                    activeCategory === "product-research"
+                      ? getProductResearchPublicationLink(entry.id)
+                      : undefined
+                  }
+                  onOpen={
+                    activeCategory === "product-research"
+                      ? undefined
+                      : () => onOpenCase(entry.id)
+                  }
                 />
               ) : (
                 <ProjectListItem
                   id={entry.id}
                   title={entry.title}
-                  description={entry.description}
-                  summary={entry.workflow?.tools ?? "AI Workflow"}
-                  meta="AI Workflow"
+                  description={
+                    getAIWorkflowCardSubtitle(entry.id) ?? entry.description
+                  }
+                  summary={getAIWorkflowCardMeta(entry.id) ?? "AI Workflow"}
+                  labels={getCaseStudyCardLabels(activeCategory, entry.id)}
+                  previewImageSrc={getAIWorkflowThumbnail(entry.id)}
                   previewLabel="Workflow Preview"
-                  ctaLabel="View workflow"
-                  onOpen={() => onOpenCase(entry.id)}
+                  ctaLabel={
+                    entry.id === TBU_WORKFLOW_CARD_ID
+                      ? undefined
+                      : "View workflow"
+                  }
+                  footer={
+                    entry.id === TBU_WORKFLOW_CARD_ID ? <TbuBadge /> : undefined
+                  }
+                  onOpen={
+                    entry.id === TBU_WORKFLOW_CARD_ID
+                      ? undefined
+                      : () => onOpenCase(entry.id)
+                  }
                 />
               )}
               {index < entries.length - 1 && <ProjectListDivider />}

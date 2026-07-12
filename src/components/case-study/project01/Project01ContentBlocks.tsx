@@ -1,5 +1,8 @@
 import type { ContentBlock } from "../../../lib/parseCaseStudyMarkdown";
+import { getCaseStudyContentEmbed } from "../../../data/caseStudyContentEmbeds";
+import { getCaseStudyContentImage } from "../../../data/caseStudyContentImages";
 import Project01Callout from "./Project01Callout";
+import Project01Image from "./Project01Image";
 import Project01ImagePlaceholder from "./Project01ImagePlaceholder";
 import {
   PROJECT01_BODY_CLASS,
@@ -10,13 +13,14 @@ import {
 
 type Project01ContentBlocksProps = {
   blocks: ContentBlock[];
+  caseId?: string;
 };
 
 function isWideBlock(block: ContentBlock): boolean {
-  return block.type === "image" || block.type === "chart";
+  return block.type === "image" || block.type === "chart" || block.type === "embed";
 }
 
-function renderBlock(block: ContentBlock, index: number) {
+function renderBlock(block: ContentBlock, index: number, caseId?: string) {
   switch (block.type) {
     case "paragraph":
       return (
@@ -52,9 +56,27 @@ function renderBlock(block: ContentBlock, index: number) {
         </Project01Callout>
       );
 
+    case "embed": {
+      if (!caseId) return null;
+      const embed = getCaseStudyContentEmbed(caseId, block.id);
+      return embed ? <div key={index}>{embed}</div> : null;
+    }
+
     case "image":
-    case "chart":
-      return <Project01ImagePlaceholder key={index} label={block.label} />;
+    case "chart": {
+      if (block.type === "image" && block.assetKey && caseId) {
+        const src = getCaseStudyContentImage(caseId, block.assetKey);
+        if (src) {
+          return <Project01Image key={index} src={src} />;
+        }
+      }
+
+      if (block.type === "image" && !block.assetKey) {
+        return <Project01ImagePlaceholder key={index} label={block.label} />;
+      }
+
+      return null;
+    }
 
     case "metric":
       if (!block.body) {
@@ -104,6 +126,7 @@ function renderBlock(block: ContentBlock, index: number) {
 
 export default function Project01ContentBlocks({
   blocks,
+  caseId,
 }: Project01ContentBlocksProps) {
   return (
     <div className={PROJECT01_CONTENT_GAP_CLASS}>
@@ -112,7 +135,7 @@ export default function Project01ContentBlocks({
           key={index}
           className={isWideBlock(block) ? "w-full" : undefined}
         >
-          {renderBlock(block, index)}
+          {renderBlock(block, index, caseId)}
         </div>
       ))}
     </div>

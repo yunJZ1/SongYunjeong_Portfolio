@@ -6,6 +6,7 @@ import CaseStudyDetailPage from "./pages/CaseStudyDetailPage";
 import CaseStudyListPage from "./pages/CaseStudyListPage";
 import HomeLandingPage from "./pages/HomeLandingPage";
 import WhoAmIPage from "./pages/WhoAmIPage";
+import { downloadResume } from "./lib/resumeDownload";
 import type { CaseStudyListCategory } from "./lib/caseStudyListCategory";
 import {
   readPortfolioUrlState,
@@ -75,6 +76,10 @@ export default function HomePage() {
       { role: "user", text: trimmed },
       { role: "assistant", text: assistantResponse },
     ]);
+
+    if (trimmed === "Resume") {
+      window.setTimeout(downloadResume, 600);
+    }
   }
 
   function handleNavigate(
@@ -110,12 +115,6 @@ export default function HomePage() {
     setView("case-study");
     setCaseStudyCategory("product-cases");
     syncUrl("case-study", { category: "product-cases" });
-  }
-
-  function handlePortfolioAIWorkflow() {
-    setView("case-study");
-    setCaseStudyCategory("ai-workflow");
-    syncUrl("case-study", { category: "ai-workflow" });
   }
 
   function handleCaseStudyCategoryChange(category: CaseStudyListCategory) {
@@ -167,10 +166,8 @@ export default function HomePage() {
   return (
     <AppLayout
       activeView={view}
-      caseStudyCategory={caseStudyCategory}
       onNavigate={handleNavigate}
       onPortfolioCaseStudy={handlePortfolioCaseStudy}
-      onPortfolioAIWorkflow={handlePortfolioAIWorkflow}
     >
       {renderMain()}
     </AppLayout>

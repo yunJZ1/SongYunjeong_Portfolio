@@ -6,12 +6,25 @@ export type PrototypeScreenConfig = {
   placeholderLabel?: string;
 };
 
+export type PrototypeBlockLayout = "editorial" | "wide";
+
 export type PrototypeEditorialBlockConfig = {
   id: string;
+  layout?: "editorial";
   heading?: string;
   description?: string;
   screen: PrototypeScreenConfig;
 };
+
+export type PrototypeWideBlockConfig = {
+  id: string;
+  layout: "wide";
+  screen: PrototypeScreenConfig;
+};
+
+export type PrototypeBlockConfig =
+  | PrototypeEditorialBlockConfig
+  | PrototypeWideBlockConfig;
 
 export type CaseStudyPrototypeConfig = {
   caseId: string;
@@ -20,5 +33,7 @@ export type CaseStudyPrototypeConfig = {
   label: string;
   title: string;
   description: string;
-  blocks: PrototypeEditorialBlockConfig[];
+  blocks: PrototypeBlockConfig[];
+  /** When set, prototype renders inside this body section instead of after Intro */
+  placementSectionId?: string;
 };

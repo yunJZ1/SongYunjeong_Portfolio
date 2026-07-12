@@ -17,7 +17,7 @@ export default function AIWorkflowBanner({ onNavigate }: AIWorkflowBannerProps) 
             AI Workflow
           </span>
           <p className="font-pretendard text-[13px] md:text-[14px] font-medium text-[#404040] tracking-[-0.28px] leading-[1.5] sm:truncate">
-            See how Yoonjeong Song designs and builds products with AI.
+            See how Yunjeong Song designs and builds products with AI.
           </p>
         </div>
 

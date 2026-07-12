@@ -14,6 +14,8 @@ function blockHasContent(block: ContentBlock): boolean {
     case "image":
     case "chart":
       return block.label.trim().length > 0;
+    case "embed":
+      return block.id.trim().length > 0;
     case "subheading":
       return block.text.trim().length > 0;
     case "subsubsection":

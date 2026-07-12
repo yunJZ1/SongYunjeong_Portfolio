@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { CaseStudyPillLabel } from "../../data/caseStudyCardLabels";
 import ProjectHero from "./ProjectHero";
 import ProjectPreview from "./ProjectPreview";
 
@@ -7,9 +8,13 @@ export type ProjectListItemData = {
   title: string;
   description: string;
   summary?: string;
-  meta?: string;
+  fieldMeta?: string;
+  labels?: CaseStudyPillLabel[];
   previewLabel?: string;
+  previewImageSrc?: string;
   ctaLabel?: string;
+  ctaHref?: string;
+  footer?: ReactNode;
 };
 
 type ProjectListItemProps = ProjectListItemData & {
@@ -20,9 +25,13 @@ export function ProjectListItem({
   title,
   description,
   summary,
-  meta,
+  fieldMeta,
+  labels,
   previewLabel,
+  previewImageSrc,
   ctaLabel,
+  ctaHref,
+  footer,
   onOpen,
 }: ProjectListItemProps) {
   const content = (
@@ -31,10 +40,13 @@ export function ProjectListItem({
         title={title}
         description={description}
         summary={summary}
-        meta={meta}
+        fieldMeta={fieldMeta}
+        labels={labels}
         ctaLabel={ctaLabel}
+        ctaHref={ctaHref}
+        footer={footer}
       />
-      <ProjectPreview label={previewLabel} />
+      <ProjectPreview label={previewLabel} imageSrc={previewImageSrc} />
     </>
   );
 

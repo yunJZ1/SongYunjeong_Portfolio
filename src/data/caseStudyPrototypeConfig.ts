@@ -9,16 +9,26 @@ const CASE_STUDY_PROTOTYPE_BY_ID: Record<string, CaseStudyPrototypeConfig> = {
     title: "인터랙티브 프로토타입",
     description:
       "호스트가 여러 조건을 입력하고 최적의 일정 조건을 탐색하는 핵심 플로우를 시각화한 프로토타입입니다.",
+    placementSectionId: "section-outcome",
     blocks: [
       {
         id: "schedule-flow",
         heading: "일정 조건 탐색 플로우",
         description:
-          "조건 입력, 후보 일정 비교, 확정까지의 핵심 화면을 미리볼 수 있습니다. 이후 인터랙티브 프로토타입이 이 영역에 연결됩니다.",
+          "조건 입력, 후보 일정 비교, 확정까지의 핵심 화면을 미리볼 수 있습니다. 이후 Desktop 화면으로 연결됩니다.",
         screen: {
           id: "schedule-flow-screen",
           iframeSrc: "https://workson-prototype-do92.vercel.app/",
           alt: "일정 조건 탐색 인터랙티브 프로토타입",
+        },
+      },
+      {
+        id: "desktop-flow",
+        layout: "wide",
+        screen: {
+          id: "desktop-flow-screen",
+          iframeSrc: "https://workson-prototype.vercel.app/desktop",
+          alt: "데스크톱 일정 조건 탐색 인터랙티브 프로토타입",
         },
       },
     ],

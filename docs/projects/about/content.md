@@ -136,18 +136,12 @@ AI 인터랙션 연구와 UX/UI 개선 프로젝트를 중심으로 한 디자�
 
 ## ETC
 
-### Additional Skills
+### Certification
 
-AI-based Build Workflow · Design & React Prototyping · Product Research & Validation
+GTQ
 
-### Interests
+컴퓨터그래픽스운용기능사
 
-AI Product · UX Research · Editorial Design
+### Contact
 
-### Languages
-
-Korean · English
-
-### Contact / Resume
-
-Resume · LinkedIn · yunjeong@example.com
+yunjeong_1@naver.com

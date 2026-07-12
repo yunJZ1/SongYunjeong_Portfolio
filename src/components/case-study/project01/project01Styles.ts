@@ -32,8 +32,12 @@ export const PROJECT01_METRICS_GRID_CLASS =
 export const PROJECT01_METRIC_CARD_CLASS =
   "min-w-0 flex flex-col gap-[10px] bg-white border border-[#e5e5e5] rounded-[18px] p-[24px] shadow-[0_12px_32px_rgba(0,0,0,0.06)]";
 
-export const PROJECT01_CHIP_CLASS =
-  "inline-flex items-center h-[34px] px-[12px] rounded-full bg-white border border-[#e5e5e5] text-[13px] font-medium text-[#737373] tracking-[-0.26px] leading-none";
+export const PROJECT01_CHIP_BASE_CLASS =
+  "inline-flex items-center h-[34px] px-[12px] rounded-full text-[13px] font-medium tracking-[-0.26px] leading-none";
+
+export const PROJECT01_CHIP_CLASS = `${PROJECT01_CHIP_BASE_CLASS} bg-white border border-[#e5e5e5] text-[#737373]`;
+
+export const PROJECT01_CHIP_PRIMARY_CLASS = `${PROJECT01_CHIP_BASE_CLASS} bg-[#171719] text-white`;
 
 export const PROJECT01_BODY_CLASS =
   "font-pretendard text-[15px] md:text-[16px] font-normal text-[#606060] tracking-[-0.32px] leading-[1.7]";

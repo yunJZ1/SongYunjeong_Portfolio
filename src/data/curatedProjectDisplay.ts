@@ -37,14 +37,16 @@ export const HOME_AI_WORKFLOW_PROJECTS: CuratedProjectDisplay[] = [
   {
     id: "build-validate",
     title: "서비스 기획부터 출시까지, 0→1 with Cursor",
-    description: "",
+    description: "스스로 변화하기 위한 타임트래커, TOKI",
     category: "AI Workflow",
   },
   {
     id: "discover-structure",
-    title: "여러 조건을 고려해 최선의 일정 조건을 잡으려면?",
-    description: "",
+    title: "복잡한 조율은 줄이고, 의사결정은 더 빠르게",
+    description:
+      "여러 사람의 조건을 이해해 최적의 회의 시간을 제안하는 Meeting Scheduler",
     category: "AI Workflow",
+    year: "2026",
   },
 ];
 

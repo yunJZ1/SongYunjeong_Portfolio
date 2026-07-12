@@ -8,7 +8,8 @@ export type ContentBlock =
   | { type: "paragraph"; text: string }
   | { type: "callout"; parts: CalloutPart[] }
   | { type: "quote"; text: string }
-  | { type: "image"; label: string }
+  | { type: "image"; label: string; assetKey?: string }
+  | { type: "embed"; id: string }
   | { type: "chart"; label: string }
   | { type: "subheading"; text: string }
   | { type: "subsubsection"; title: string; body: string }
@@ -122,6 +123,21 @@ function parseBlocks(body: string): ContentBlock[] {
       continue;
     }
 
+    const assetImageMatch = line.match(/^\[IMAGE:\s*(.+)\]$/);
+    if (assetImageMatch) {
+      const assetKey = assetImageMatch[1].trim();
+      blocks.push({ type: "image", label: assetKey, assetKey });
+      i += 1;
+      continue;
+    }
+
+    const embedMatch = line.match(/^\[EMBED:\s*(.+)\]$/);
+    if (embedMatch) {
+      blocks.push({ type: "embed", id: embedMatch[1].trim() });
+      i += 1;
+      continue;
+    }
+
     const chartMatch = line.match(/^\[CHART_PLACEHOLDER:\s*(.+)\]$/);
     if (chartMatch) {
       blocks.push({ type: "chart", label: chartMatch[1].trim() });
@@ -140,6 +156,8 @@ function parseBlocks(body: string): ContentBlock[] {
           next.startsWith("#### ") ||
           next === "[CALLOUT]" ||
           next.startsWith("[IMAGE_PLACEHOLDER:") ||
+          next.startsWith("[IMAGE:") ||
+          next.startsWith("[EMBED:") ||
           next.startsWith("[CHART_PLACEHOLDER:") ||
           next === "---"
         ) {
@@ -163,6 +181,8 @@ function parseBlocks(body: string): ContentBlock[] {
           next.startsWith("#### ") ||
           next === "[CALLOUT]" ||
           next.startsWith("[IMAGE_PLACEHOLDER:") ||
+          next.startsWith("[IMAGE:") ||
+          next.startsWith("[EMBED:") ||
           next.startsWith("[CHART_PLACEHOLDER:") ||
           next === "---"
         ) {
@@ -194,6 +214,8 @@ function parseBlocks(body: string): ContentBlock[] {
         next.startsWith("#") ||
         next === "[CALLOUT]" ||
         next.startsWith("[IMAGE_PLACEHOLDER:") ||
+        next.startsWith("[IMAGE:") ||
+        next.startsWith("[EMBED:") ||
         next.startsWith("[CHART_PLACEHOLDER:") ||
         next === "---"
       ) {

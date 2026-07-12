@@ -5,11 +5,13 @@ import { PROJECT01_CAPTION_CLASS } from "../case-study/project01/project01Styles
 type PrototypeScreenSurfaceProps = {
   screen: PrototypeScreenConfig;
   children?: ReactNode;
+  allowFullScreen?: boolean;
 };
 
 export default function PrototypeScreenSurface({
   screen,
   children,
+  allowFullScreen = false,
 }: PrototypeScreenSurfaceProps) {
   if (children) {
     return <div className="h-full w-full overflow-hidden">{children}</div>;
@@ -21,6 +23,7 @@ export default function PrototypeScreenSurface({
         src={screen.iframeSrc}
         title={screen.alt ?? "Interactive prototype"}
         loading="lazy"
+        allowFullScreen={allowFullScreen}
         className="block h-full w-full border-0 m-0 p-0 bg-white"
       />
     );

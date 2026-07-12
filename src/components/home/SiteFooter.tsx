@@ -5,7 +5,7 @@ function scrollToTop() {
 export default function SiteFooter() {
   return (
     <footer className="border-t border-[#e5e5e5]">
-      <div className="max-w-[1200px] mx-auto px-[40px] py-[40px] flex items-center justify-between">
+      <div className="max-w-[1200px] mx-auto px-[24px] md:px-[40px] py-[40px] flex items-center justify-between">
         <p className="text-[14px] font-medium text-[#a9a9a9] tracking-[-0.28px]">
           © 2026 Yunjeong Song
         </p>

@@ -3,7 +3,8 @@ import NextCasesSection from "../components/case-study/NextCasesSection";
 import Project01Document from "../components/case-study/project01/Project01Document";
 import Project01SectionNavigation from "../components/case-study/project01/Project01SectionNavigation";
 import PrototypeSection from "../components/prototype/PrototypeSection";
-import SiteFooter from "../components/home/SiteFooter";
+import { getCaseStudyDetailLayoutConfig } from "../data/caseStudyDetailLayoutConfig";
+import { getCaseStudyDetailKeywordChips } from "../data/caseStudyDetailKeywordChips";
 import { getCaseStudyPrototypeConfig } from "../data/caseStudyPrototypeConfig";
 import { getCaseStudyContentMd } from "../lib/caseStudyContentById";
 import {
@@ -61,10 +62,25 @@ export default function CaseStudyDetailPage({
     bodySections.length > 0 ? resolved.navItems : [],
   );
   const prototypeConfig = getCaseStudyPrototypeConfig(caseId);
-  const metaChips = buildDetailMetaChips(
-    resolved.parsed.hero.metaChips,
-    curatedHero,
+  const layoutConfig = getCaseStudyDetailLayoutConfig(caseId);
+  const metaChips = getCaseStudyDetailKeywordChips(
+    caseId,
+    buildDetailMetaChips(resolved.parsed.hero.metaChips, curatedHero),
   );
+
+  const sectionAppendix =
+    prototypeConfig?.placementSectionId != null
+      ? {
+          [prototypeConfig.placementSectionId]: (
+            <PrototypeSection config={prototypeConfig} variant="embedded" />
+          ),
+        }
+      : undefined;
+
+  const afterIntroPrototype =
+    prototypeConfig && !prototypeConfig.placementSectionId ? (
+      <PrototypeSection config={prototypeConfig} />
+    ) : undefined;
 
   const { activeNavId, scrollToNav } = useScrollSpy({
     navItems,
@@ -74,6 +90,7 @@ export default function CaseStudyDetailPage({
     <main className="bg-white">
       <CaseStudyPage topPaddingVariant="compact">
         <Project01Document
+          caseId={caseId}
           sectionLabel={curatedHero.sectionLabel}
           title={curatedHero.title}
           subtitle={curatedHero.subtitle}
@@ -82,11 +99,10 @@ export default function CaseStudyDetailPage({
           metrics={metrics}
           callout={callout}
           sections={bodySections}
-          afterIntro={
-            prototypeConfig ? (
-              <PrototypeSection config={prototypeConfig} />
-            ) : undefined
-          }
+          hideHeroImage={layoutConfig?.hideHeroImage}
+          highlightMetricCards={layoutConfig?.highlightMetricCards}
+          sectionAppendix={sectionAppendix}
+          afterIntro={afterIntroPrototype}
           navigation={
             <Project01SectionNavigation
               navItems={navItems}
@@ -98,8 +114,6 @@ export default function CaseStudyDetailPage({
       </CaseStudyPage>
 
       <NextCasesSection currentCaseId={caseId} onOpenCase={onOpenCase} />
-
-      <SiteFooter />
     </main>
   );
 }

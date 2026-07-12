@@ -72,10 +72,10 @@ export default function ChatView({
           <div className="h-full flex flex-col items-center justify-center text-center px-[40px]">
             <div className="flex flex-col items-center gap-[8px]">
               <h1 className="text-[42px] font-semibold text-[#171719] tracking-[-1.26px] leading-[1.35]">
-                What Product would I solve today?
+                What problem should I solve today?
               </h1>
               <p className="text-[42px] font-semibold text-[#171719] tracking-[-1.26px] leading-[1.35]">
-                I can Design &amp; Build with AI
+                I design and build products with AI.
               </p>
             </div>
           </div>

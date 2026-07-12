@@ -67,8 +67,6 @@ AI가 무엇을 추천하는지보다, 어떻게 추천하는지가 더 중요�
 
 이 프로젝트는 AI 추천 인터페이스의 표현 방식이 사용자 신뢰와 추천 수용, 그리고 구매 의사결정에 어떤 영향을 주는지 제품 관점에서 확인하는 것부터 시작했어요.
 
-[IMAGE_PLACEHOLDER: Background Visual]
-
 ---
 
 ## Problem
@@ -91,8 +89,6 @@ AI가 무엇을 추천하는지보다, 어떻게 추천하는지가 더 중요�
 
 결국 같은 제품을 추천해도 표현 방식 하나가 추천 경험 전체를 바꾸고 있었지만, 이를 설명할 데이터는 없었습니다.
 
-[IMAGE_PLACEHOLDER: Problem Diagram]
-
 ---
 
 ## Research
@@ -100,8 +96,6 @@ AI가 무엇을 추천하는지보다, 어떻게 추천하는지가 더 중요�
 ### 51명 사용자와 함께 ‘추천을 거부하는 순간’을 찾았어요
 
 AI 추천 인터페이스를 세 가지 유형으로 프로토타입을 만들고, 51명 사용자 실험과 심층 인터뷰를 진행했습니다.
-
-[IMAGE_PLACEHOLDER: Research Process]
 
 처음에는 ‘희소성을 강조하는 표현’이 가장 거부감을 만들 것이라고 예상했어요. 하지만 결과는 예상과 달랐습니다.
 
@@ -115,21 +109,9 @@ AI 추천 인터페이스를 세 가지 유형으로 프로토타입을 만들�
 
 [/CALLOUT]
 
-[CHART_PLACEHOLDER: Quantitative SPSS Result]
+[EMBED: dark-pattern-cards]
 
-### Dark Pattern Types
-
-#### Confirmshaming
-
-작성 필요: 사용자의 거절을 부정적으로 느끼게 만드는 표현 방식.
-
-#### Social Proof
-
-작성 필요: 다수가 선택했다는 정보를 통해 선택을 유도하는 표현 방식.
-
-#### Scarcity
-
-작성 필요: 희소성이나 시간 압박을 강조해 선택을 유도하는 표현 방식.
+[EMBED: experiment-results]
 
 인터뷰에서는 더 흥미로운 결과가 나왔어요.
 
@@ -163,6 +145,8 @@ AI 추천 인터페이스를 세 가지 유형으로 프로토타입을 만들�
 
 [/CALLOUT]
 
+[EMBED: insight-shift]
+
 ---
 
 ## Design Direction
@@ -177,9 +161,9 @@ AI 추천 인터페이스를 세 가지 유형으로 프로토타입을 만들�
 
 모든 추천에는 추천 이유와 근거, 비교 정보, 출처를 함께 제공하도록 구조를 바꾸고, 사용자의 판단을 대신하는 감정적 표현을 제거했습니다. UI 디자인보다 추천이 전달되는 방식 자체를 바꾸는 데 집중했습니다.
 
-[IMAGE_PLACEHOLDER: Design Principle Cards]
+[IMAGE: 1-1]
 
-[IMAGE_PLACEHOLDER: Noa AI UI]
+[IMAGE: 1-2]
 
 ---
 
@@ -193,8 +177,6 @@ AI 추천 인터페이스를 세 가지 유형으로 프로토타입을 만들�
 
 추천 경험은 단순한 UX가 아니라 제품과 브랜드를 신뢰하는 방식까지 영향을 준다는 것을 확인할 수 있었어요. 이 결과를 바탕으로 AI Recommendation UX Principle 4가지를 정리했고, 연구는 Archives of Design Research에 게재되었습니다.
 
-[CHART_PLACEHOLDER: Before After Rejection Rate]
-
 ---
 
 ## What I Learned
@@ -202,11 +184,3 @@ AI 추천 인터페이스를 세 가지 유형으로 프로토타입을 만들�
 ### AI 제품에서 중요한 것은 전달받는 방식
 
 사용자는 AI가 추천을 얼마나 잘하는지보다, 이 추천을 믿어도 되는지 이해할 수 있는 경험이 더 중요했습니다. 또한 프로젝트 결과를 제품팀에서 실제 화면과 컴포넌트, 플로우 설계에 적용할 수 있는 설계 기준으로 번역하는 과정이 중요한 디자인 작업이라는 것을 배웠습니다.
-
----
-
-## Prototype Screens
-
-[IMAGE_PLACEHOLDER: Prototype Screen 01]
-[IMAGE_PLACEHOLDER: Prototype Screen 02]
-[IMAGE_PLACEHOLDER: Prototype Screen 03]

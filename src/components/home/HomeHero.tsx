@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CHIP_RESPONSES, FALLBACK_RESPONSE } from "../ChipButtons";
 import GradientSurface from "./GradientSurface";
+import { downloadResume } from "../../lib/resumeDownload";
 import type { NavigateHandler } from "../../types";
 
 const KEYWORDS = [
@@ -121,7 +122,14 @@ export default function HomeHero({
             after: () => onNavigate("case-study", "product-research"),
           };
         case "Resume":
-          return { text: CHIP_RESPONSES.Resume };
+          return {
+            text: "You can download Yunjeong's resume here.",
+            link: {
+              label: "Download Resume →",
+              onClick: downloadResume,
+            },
+            after: downloadResume,
+          };
         case "Coffee Chat":
           return { text: CHIP_RESPONSES["Let's Coffee Chat"] };
         default:
@@ -254,10 +262,10 @@ export default function HomeHero({
           >
             <div className="text-center flex flex-col items-center gap-[6px]">
               <h1 className="text-[32px] md:text-[40px] font-medium text-[#171719] tracking-[-0.8px] leading-[1.3]">
-                What Product would I solve today?
+                What problem should I solve today?
               </h1>
               <p className="text-[32px] md:text-[40px] font-medium text-[#171719] tracking-[-0.8px] leading-[1.3]">
-                I can Design &amp; Build with AI.
+                I design and build products with AI.
               </p>
             </div>
           </div>

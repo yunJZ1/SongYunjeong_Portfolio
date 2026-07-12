@@ -3,6 +3,9 @@ import {
   type CaseStudyListCategory,
 } from "../../lib/caseStudyListCategory";
 
+const CATEGORY_BUTTON_CLASS =
+  "rounded-full px-[18px] md:px-[20px] py-[10px] text-[15px] font-medium tracking-[-0.3px] leading-none border-0 cursor-pointer transition-colors duration-200";
+
 type CaseStudyCategoryNavProps = {
   activeCategory: CaseStudyListCategory;
   onCategoryChange: (category: CaseStudyListCategory) => void;
@@ -15,7 +18,7 @@ export default function CaseStudyCategoryNav({
   return (
     <nav
       aria-label="Project categories"
-      className="flex flex-wrap items-center gap-[20px] md:gap-[28px]"
+      className="flex flex-wrap items-center gap-[8px]"
     >
       {CASE_STUDY_LIST_CATEGORIES.map((category) => {
         const isActive = activeCategory === category.id;
@@ -25,10 +28,10 @@ export default function CaseStudyCategoryNav({
             key={category.id}
             type="button"
             onClick={() => onCategoryChange(category.id)}
-            className={`text-[15px] font-medium tracking-[-0.3px] leading-none bg-transparent border-0 p-0 cursor-pointer transition-colors duration-200 ${
+            className={`${CATEGORY_BUTTON_CLASS} ${
               isActive
-                ? "text-[#171719]"
-                : "text-[#a9a9a9] hover:text-[#171719]"
+                ? "bg-[#171719] text-white hover:bg-[#000000]"
+                : "bg-[#F4F4F4] text-[#171719] hover:bg-[#EBEBEB]"
             }`}
           >
             {category.label}

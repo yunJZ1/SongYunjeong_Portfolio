@@ -1,13 +1,61 @@
 import { useState } from "react";
-import type { CaseStudyListCategory } from "../lib/caseStudyListCategory";
+import { downloadResume } from "../lib/resumeDownload";
+import SiteFooter from "./home/SiteFooter";
 import type { View } from "../types";
 
-const UTILITY_NAV = ["Resume", "LinkedIn"] as const;
+const UTILITY_NAV: { label: string; href?: string; onClick?: () => void }[] = [
+  { label: "Resume", onClick: downloadResume },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/yunjeongsong" },
+];
 
-const PRIMARY_NAV: { label: string; view?: View; action?: "case-study" | "ai-workflow" }[] = [
+function UtilityNavItem({
+  item,
+  className,
+  onNavigate,
+}: {
+  item: (typeof UTILITY_NAV)[number];
+  className: string;
+  onNavigate?: () => void;
+}) {
+  if (item.href) {
+    return (
+      <a
+        href={item.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={onNavigate}
+        className={`${className} no-underline hover:underline`}
+      >
+        {item.label}
+      </a>
+    );
+  }
+
+  if (item.onClick) {
+    return (
+      <button
+        type="button"
+        onClick={() => {
+          item.onClick?.();
+          onNavigate?.();
+        }}
+        className={className}
+      >
+        {item.label}
+      </button>
+    );
+  }
+
+  return (
+    <button type="button" onClick={onNavigate} className={className}>
+      {item.label}
+    </button>
+  );
+}
+
+const PRIMARY_NAV: { label: string; view?: View; action?: "case-study" }[] = [
   { label: "About Me", view: "who-am-i" },
   { label: "Case Study", action: "case-study" },
-  { label: "AI Workflow", action: "ai-workflow" },
 ];
 
 const NAV_LINK =
@@ -18,34 +66,26 @@ const NAV_LINK_ACTIVE =
 
 type AppLayoutProps = {
   activeView: View;
-  caseStudyCategory: CaseStudyListCategory;
   onNavigate: (view: View) => void;
   onPortfolioCaseStudy: () => void;
-  onPortfolioAIWorkflow: () => void;
   children: React.ReactNode;
 };
 
 export default function AppLayout({
   activeView,
-  caseStudyCategory,
   onNavigate,
   onPortfolioCaseStudy,
-  onPortfolioAIWorkflow,
   children,
 }: AppLayoutProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const isAboutMeActive = activeView === "who-am-i";
-  const isAIWorkflowActive =
-    activeView === "case-study" && caseStudyCategory === "ai-workflow";
   const isCaseStudyActive =
-    (activeView === "case-study" || activeView === "case-study-detail") &&
-    !isAIWorkflowActive;
+    activeView === "case-study" || activeView === "case-study-detail";
 
   function isNavActive(item: (typeof PRIMARY_NAV)[number]): boolean {
     if (item.view === "who-am-i") return isAboutMeActive;
     if (item.action === "case-study") return isCaseStudyActive;
-    if (item.action === "ai-workflow") return isAIWorkflowActive;
     return false;
   }
 
@@ -56,7 +96,6 @@ export default function AppLayout({
       return;
     }
     if (item.action === "case-study") onPortfolioCaseStudy();
-    if (item.action === "ai-workflow") onPortfolioAIWorkflow();
   }
 
   return (
@@ -94,9 +133,7 @@ export default function AppLayout({
         <div className="flex items-center gap-[16px] md:gap-[28px] shrink-0">
           <nav className="hidden md:flex items-center gap-[28px]">
             {UTILITY_NAV.map((item) => (
-              <button key={item} type="button" className={NAV_LINK}>
-                {item}
-              </button>
+              <UtilityNavItem key={item.label} item={item} className={NAV_LINK} />
             ))}
           </nav>
 
@@ -134,19 +171,18 @@ export default function AppLayout({
           ))}
           <div className="h-px w-full bg-[#e7e7e7] my-[8px]" />
           {UTILITY_NAV.map((item) => (
-            <button
-              key={item}
-              type="button"
-              onClick={() => setMobileOpen(false)}
+            <UtilityNavItem
+              key={item.label}
+              item={item}
               className={`text-left py-[10px] ${NAV_LINK}`}
-            >
-              {item}
-            </button>
+              onNavigate={() => setMobileOpen(false)}
+            />
           ))}
         </div>
       )}
 
       <div className="flex-1 w-full">{children}</div>
+      <SiteFooter />
     </div>
   );
 }

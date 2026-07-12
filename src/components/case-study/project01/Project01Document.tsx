@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import AboutHighlightCard from "../../about/AboutHighlightCard";
 import type {
   CaseStudySection,
   ContentBlock,
@@ -9,6 +10,7 @@ import Project01ContentBlocks from "./Project01ContentBlocks";
 import {
   PROJECT01_BLOCK_GAP_CLASS,
   PROJECT01_CHIP_CLASS,
+  PROJECT01_CHIP_PRIMARY_CLASS,
   PROJECT01_CONTENT_CLASS,
   PROJECT01_DIVIDER_CLASS,
   PROJECT01_INTRO_GAP_CLASS,
@@ -31,6 +33,7 @@ type MetricItem = {
 };
 
 type Project01DocumentProps = {
+  caseId?: string;
   sectionLabel?: string;
   title: string;
   subtitle: string;
@@ -41,6 +44,9 @@ type Project01DocumentProps = {
   sections: CaseStudySection[];
   navigation: ReactNode;
   afterIntro?: ReactNode;
+  hideHeroImage?: boolean;
+  highlightMetricCards?: boolean;
+  sectionAppendix?: Record<string, ReactNode>;
 };
 
 const TLDR_ROW_LABEL_CLASS =
@@ -50,6 +56,7 @@ const TLDR_ROW_BODY_CLASS =
   "font-pretendard text-[15px] md:text-[16px] font-normal text-[#606060] tracking-[-0.32px] leading-[1.7]";
 
 export default function Project01Document({
+  caseId,
   sectionLabel = "Case Study",
   title,
   subtitle,
@@ -60,6 +67,9 @@ export default function Project01Document({
   sections,
   navigation,
   afterIntro,
+  hideHeroImage = false,
+  highlightMetricCards = false,
+  sectionAppendix,
 }: Project01DocumentProps) {
   const tldrItems = tldr.filter(
     (block): block is Extract<ContentBlock, { type: "tldr-item" }> =>
@@ -96,19 +106,28 @@ export default function Project01Document({
 
               {chips.length > 0 && (
                 <div className="flex flex-wrap gap-[8px]">
-                  {chips.map((chip) => (
-                    <span key={chip} className={PROJECT01_CHIP_CLASS}>
+                  {chips.map((chip, index) => (
+                    <span
+                      key={chip}
+                      className={
+                        index === 0
+                          ? PROJECT01_CHIP_PRIMARY_CLASS
+                          : PROJECT01_CHIP_CLASS
+                      }
+                    >
                       {chip}
                     </span>
                   ))}
                 </div>
               )}
 
-              <div className="w-full aspect-[16/9] rounded-[16px] bg-[#f5f5f5] overflow-hidden flex items-center justify-center">
-                <span className="text-[12px] font-medium text-[#bdbdbd] tracking-[-0.24px]">
-                  Hero Visual
-                </span>
-              </div>
+              {!hideHeroImage && (
+                <div className="w-full aspect-[16/9] rounded-[16px] bg-[#f5f5f5] overflow-hidden flex items-center justify-center">
+                  <span className="text-[12px] font-medium text-[#bdbdbd] tracking-[-0.24px]">
+                    Hero Visual
+                  </span>
+                </div>
+              )}
             </div>
 
             {tldrItems.length > 0 && (
@@ -136,18 +155,30 @@ export default function Project01Document({
                 <p className={PROJECT01_SECTION_LABEL_CLASS}>Key Metrics</p>
 
                 <div
-                  className={`${PROJECT01_LABEL_CONTENT_GAP_CLASS} ${PROJECT01_METRICS_GRID_CLASS}`}
+                  className={`${PROJECT01_LABEL_CONTENT_GAP_CLASS} ${
+                    highlightMetricCards
+                      ? "grid grid-cols-1 sm:grid-cols-2 gap-[16px]"
+                      : PROJECT01_METRICS_GRID_CLASS
+                  }`}
                 >
-                  {metrics.map((metric) => (
-                    <div key={metric.title} className={PROJECT01_METRIC_CARD_CLASS}>
-                      <p className="font-pretendard text-[24px] md:text-[28px] font-semibold text-[#171719] tracking-[-0.64px] leading-[1.25] break-words">
-                        {metric.title}
-                      </p>
-                      <p className="font-pretendard text-[13px] md:text-[14px] font-normal text-[#737373] tracking-[-0.28px] leading-[1.65] break-words">
-                        {metric.body}
-                      </p>
-                    </div>
-                  ))}
+                  {metrics.map((metric) =>
+                    highlightMetricCards ? (
+                      <AboutHighlightCard
+                        key={metric.title}
+                        title={metric.title}
+                        description={metric.body}
+                      />
+                    ) : (
+                      <div key={metric.title} className={PROJECT01_METRIC_CARD_CLASS}>
+                        <p className="font-pretendard text-[24px] md:text-[28px] font-semibold text-[#171719] tracking-[-0.64px] leading-[1.25] break-words">
+                          {metric.title}
+                        </p>
+                        <p className="font-pretendard text-[13px] md:text-[14px] font-normal text-[#737373] tracking-[-0.28px] leading-[1.65] break-words">
+                          {metric.body}
+                        </p>
+                      </div>
+                    ),
+                  )}
                 </div>
               </div>
             )}
@@ -157,7 +188,7 @@ export default function Project01Document({
 
           {callout.length > 0 && (
             <div className={PROJECT01_BLOCK_GAP_CLASS}>
-              <Project01ContentBlocks blocks={callout} />
+              <Project01ContentBlocks blocks={callout} caseId={caseId} />
             </div>
           )}
 
@@ -171,7 +202,11 @@ export default function Project01Document({
                     label={section.label}
                     title={section.title}
                   >
-                    <Project01ContentBlocks blocks={section.blocks} />
+                    <Project01ContentBlocks
+                      blocks={section.blocks}
+                      caseId={caseId}
+                    />
+                    {sectionAppendix?.[section.id]}
                   </Project01BodySection>
                 ))}
               </div>

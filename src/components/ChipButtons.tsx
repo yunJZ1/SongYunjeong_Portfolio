@@ -11,9 +11,9 @@ export const CHIP_RESPONSES: Record<string, string> = {
   "🦁 I know Everything about Yunjeong. Need a quick Summary?":
     "Yunjeong is a product designer with 5+ years of experience building B2B and B2C digital products. She's led design at startups and large companies, with a focus on clarity, systems thinking, and shipping work that actually gets used.",
   Resume:
-    "You can download Yunjeong's resume here → [resume link coming soon]. It covers her experience at Wanted, CERAGEM, and freelance product work across fintech and health-tech.",
+    "You can download Yunjeong's resume here.",
   "Let's Coffee Chat":
-    "Would love to connect! Drop a message at yunjeong@example.com or reach out on LinkedIn. Coffee chats are usually 30 min — happy to talk shop, share feedback on your work, or just get to know each other.",
+    "Would love to connect! Drop a message at yunjeong_1@naver.com or reach out on LinkedIn. Coffee chats are usually 30 min — happy to talk shop, share feedback on your work, or just get to know each other.",
 };
 
 export const FALLBACK_RESPONSE =

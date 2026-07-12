@@ -6,16 +6,36 @@ import {
   PROJECT01_SECTION_TITLE_CLASS,
 } from "../case-study/project01/project01Styles";
 import PrototypeEditorialBlock from "./PrototypeEditorialBlock";
+import PrototypeWideBlock from "./PrototypeWideBlock";
 
 type PrototypeSectionProps = {
   config: CaseStudyPrototypeConfig;
+  variant?: "standalone" | "embedded";
 };
 
-export default function PrototypeSection({ config }: PrototypeSectionProps) {
+function isWideBlock(
+  block: CaseStudyPrototypeConfig["blocks"][number],
+): block is Extract<
+  CaseStudyPrototypeConfig["blocks"][number],
+  { layout: "wide" }
+> {
+  return block.layout === "wide";
+}
+
+export default function PrototypeSection({
+  config,
+  variant = "standalone",
+}: PrototypeSectionProps) {
+  const isEmbedded = variant === "embedded";
+
   return (
     <section
       id={config.sectionDomId}
-      className={`scroll-mt-[96px] ${PROJECT01_BLOCK_GAP_CLASS}`}
+      className={
+        isEmbedded
+          ? "scroll-mt-[96px] mt-[40px] md:mt-[48px]"
+          : `scroll-mt-[96px] ${PROJECT01_BLOCK_GAP_CLASS}`
+      }
     >
       <div className={PROJECT01_SECTION_INNER_GAP_CLASS}>
         <p className={PROJECT01_SECTION_LABEL_CLASS}>{config.label}</p>
@@ -25,10 +45,14 @@ export default function PrototypeSection({ config }: PrototypeSectionProps) {
         </p>
       </div>
 
-      <div className="mt-[40px] md:mt-[48px] flex flex-col gap-[64px] md:gap-[80px]">
-        {config.blocks.map((block) => (
-          <PrototypeEditorialBlock key={block.id} block={block} />
-        ))}
+      <div className="mt-[40px] md:mt-[48px] flex min-w-0 flex-col gap-[64px] md:gap-[80px] overflow-x-clip">
+        {config.blocks.map((block) =>
+          isWideBlock(block) ? (
+            <PrototypeWideBlock key={block.id} block={block} />
+          ) : (
+            <PrototypeEditorialBlock key={block.id} block={block} />
+          ),
+        )}
       </div>
     </section>
   );

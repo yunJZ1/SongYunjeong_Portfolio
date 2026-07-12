@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import AIWorkflowBanner from "../components/home/AIWorkflowBanner";
 import HomeFeaturedProjects from "../components/home/HomeFeaturedProjects";
 import HomeHero from "../components/home/HomeHero";
-import SiteFooter from "../components/home/SiteFooter";
 import type { Message, NavigateHandler } from "../types";
 
 type HomeLandingPageProps = {
@@ -56,8 +55,6 @@ export default function HomeLandingPage({
       <div className="flex flex-col gap-[100px] md:gap-[120px] py-[40px] pb-[100px]">
         <HomeFeaturedProjects onOpenCase={onOpenCase} onNavigate={onNavigate} />
       </div>
-
-      <SiteFooter />
     </main>
   );
 }
