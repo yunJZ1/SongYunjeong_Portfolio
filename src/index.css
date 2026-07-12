@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+/*
+ * Register custom font families as Tailwind v4 theme tokens.
+ * --font-sans   → overrides the default `font-sans` utility
+ * --font-pretendard → new `font-pretendard` utility for Korean text
+ */
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-pretendard: "Pretendard Variable", "Pretendard", ui-sans-serif, sans-serif;
+}
+
+/* Global base */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+}
+
+/* Hero — message pop animation */
+@keyframes messagePop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.hero-message-pop {
+  animation: messagePop 0.4s ease-out forwards;
+}
+
+/* Gradient surface — glass gradient (banner + keywords) */
+.gradient-surface {
+  background: linear-gradient(
+    135deg,
+    #fafbfc 0%,
+    #f4f7fa 40%,
+    #f0f4f8 70%,
+    #f6f4f9 100%
+  );
+}
+
+.gradient-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle 180px at var(--mouse-x) var(--mouse-y),
+    rgba(200, 225, 245, 0.45) 0%,
+    rgba(220, 235, 248, 0.2) 35%,
+    transparent 70%
+  );
+  opacity: var(--glow-opacity);
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.gradient-surface::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle 100px at var(--mouse-x) var(--mouse-y),
+    rgba(255, 255, 255, 0.6) 0%,
+    transparent 60%
+  );
+  opacity: calc(var(--glow-opacity) * 0.7);
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+/* Hero — thinking indicator */
+@keyframes thinkingPulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+.thinking-indicator {
+  animation: thinkingPulse 1.4s ease-in-out infinite;
+}
+
+/* Hero — title fade */
+.hero-title-exit {
+  animation: heroTitleFade 0.45s ease-out forwards;
+}
+
+@keyframes heroTitleFade {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes catBob {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-5px); }
+}
+
+/* My Office — hotspot discovery pulse */
+@keyframes hotspotPing {
+  0%   { transform: scale(1);   opacity: 0.55; }
+  60%  { transform: scale(1.9); opacity: 0;    }
+  100% { transform: scale(1.9); opacity: 0;    }
+}
