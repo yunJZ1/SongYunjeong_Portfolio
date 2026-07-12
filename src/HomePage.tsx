@@ -122,6 +122,12 @@ export default function HomePage() {
     syncUrl("case-study", { category });
   }
 
+  function handleNavigateToCaseStudyCategory(category: CaseStudyListCategory) {
+    setView("case-study");
+    setCaseStudyCategory(category);
+    syncUrl("case-study", { category });
+  }
+
   const handleScrollComplete = useCallback(() => {
     setPendingScrollTarget(null);
   }, []);
@@ -154,6 +160,7 @@ export default function HomePage() {
           <CaseStudyDetailPage
             caseId={selectedCaseId}
             onOpenCase={handleOpenCase}
+            onNavigateToCategory={handleNavigateToCaseStudyCategory}
           />
         );
       case "who-am-i":

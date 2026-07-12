@@ -17,15 +17,18 @@ import { filterPopulatedBlocks, filterPopulatedSections } from "../lib/filterCas
 import { getCuratedDetailHero } from "../lib/getCuratedDetailHero";
 import { resolveCaseStudyContent } from "../lib/resolveCaseStudyContent";
 import { useScrollSpy } from "../hooks/useScrollSpy";
+import type { CaseStudyListCategory } from "../lib/caseStudyListCategory";
 
 type CaseStudyDetailPageProps = {
   caseId: string;
   onOpenCase: (id: string) => void;
+  onNavigateToCategory: (category: CaseStudyListCategory) => void;
 };
 
 export default function CaseStudyDetailPage({
   caseId,
   onOpenCase,
+  onNavigateToCategory,
 }: CaseStudyDetailPageProps) {
   const curatedHero = getCuratedDetailHero(caseId);
 
@@ -113,7 +116,11 @@ export default function CaseStudyDetailPage({
         />
       </CaseStudyPage>
 
-      <NextCasesSection currentCaseId={caseId} onOpenCase={onOpenCase} />
+      <NextCasesSection
+        currentCaseId={caseId}
+        onOpenCase={onOpenCase}
+        onNavigateToCategory={onNavigateToCategory}
+      />
     </main>
   );
 }

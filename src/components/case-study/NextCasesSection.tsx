@@ -1,8 +1,13 @@
-import { getCuratedProjectNeighbors } from "../../lib/getCuratedProjectNeighbors";
+import {
+  getCuratedProjectNeighbors,
+  type CuratedProjectNeighbor,
+} from "../../lib/getCuratedProjectNeighbors";
+import type { CaseStudyListCategory } from "../../lib/caseStudyListCategory";
 
 type NextCasesSectionProps = {
   currentCaseId: string;
   onOpenCase: (id: string) => void;
+  onNavigateToCategory: (category: CaseStudyListCategory) => void;
 };
 
 const NAV_LABEL_CLASS =
@@ -53,9 +58,23 @@ function NavButton({
   );
 }
 
+function handleNeighborClick(
+  neighbor: CuratedProjectNeighbor,
+  onOpenCase: (id: string) => void,
+  onNavigateToCategory: (category: CaseStudyListCategory) => void,
+) {
+  if (neighbor.type === "project") {
+    onOpenCase(neighbor.id);
+    return;
+  }
+
+  onNavigateToCategory(neighbor.category);
+}
+
 export default function NextCasesSection({
   currentCaseId,
   onOpenCase,
+  onNavigateToCategory,
 }: NextCasesSectionProps) {
   const { previous, next } = getCuratedProjectNeighbors(currentCaseId);
 
@@ -72,7 +91,9 @@ export default function NextCasesSection({
               label="Previous"
               title={previous.title}
               direction="previous"
-              onClick={() => onOpenCase(previous.id)}
+              onClick={() =>
+                handleNeighborClick(previous, onOpenCase, onNavigateToCategory)
+              }
             />
           ) : (
             <div className="flex-1" aria-hidden="true" />
@@ -83,7 +104,9 @@ export default function NextCasesSection({
               label="Next"
               title={next.title}
               direction="next"
-              onClick={() => onOpenCase(next.id)}
+              onClick={() =>
+                handleNeighborClick(next, onOpenCase, onNavigateToCategory)
+              }
             />
           ) : (
             <div className="flex-1" aria-hidden="true" />
