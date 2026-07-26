@@ -1,4 +1,4 @@
-export const RESUME_FILE_NAME = "송윤정_Resume.pdf";
+export const RESUME_FILE_NAME = "Resume-송윤정.pdf";
 
 const RESUME_PUBLIC_PATH = `/resume/${encodeURIComponent(RESUME_FILE_NAME)}`;
 
