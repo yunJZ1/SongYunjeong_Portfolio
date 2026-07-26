@@ -1,10 +1,10 @@
 export const RESUME_FILE_NAME = "Resume-송윤정.pdf";
 
-const RESUME_PUBLIC_PATH = `/resume/${encodeURIComponent(RESUME_FILE_NAME)}`;
+export const RESUME_DOWNLOAD_HREF = "/resume/Resume-송윤정.pdf";
 
 export function downloadResume(): void {
   const anchor = document.createElement("a");
-  anchor.href = RESUME_PUBLIC_PATH;
+  anchor.href = RESUME_DOWNLOAD_HREF;
   anchor.download = RESUME_FILE_NAME;
   anchor.rel = "noopener noreferrer";
   document.body.appendChild(anchor);
